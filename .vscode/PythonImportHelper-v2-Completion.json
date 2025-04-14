@@ -235,7 +235,7 @@
         "kind": 2,
         "importPath": "work",
         "description": "work",
-        "peekOfCode": "def detect_hump(image):\n    model = YOLO(HUMP_MODEL_PATH)\n    results = model(image)[0]\n    output_image = image.copy()\n    cow_detected = False\n    hump_area_sqft = None\n    hump_detected=False\n    for box, cls in zip(results.boxes.xyxy.cpu().numpy(), results.boxes.cls.cpu().numpy()):\n        x1, y1, x2, y2 = map(int, box)\n        width, height = x2 - x1, y2 - y1",
+        "peekOfCode": "def detect_hump(image):\n    model = YOLO(HUMP_MODEL_PATH)\n    results = model(image)[0]\n    output_image = image.copy()\n    cow_detected = False\n    hump_area_sqft = None\n    hump_detected= False\n    FT_PER_PIXEL = None\n    for box, cls in zip(results.boxes.xyxy.cpu().numpy(), results.boxes.cls.cpu().numpy()):\n        x1, y1, x2, y2 = map(int, box)",
         "detail": "work",
         "documentation": {}
     },
@@ -280,7 +280,7 @@
         "kind": 5,
         "importPath": "work",
         "description": "work",
-        "peekOfCode": "HUMP_MODEL_PATH = \"/Users/hammadsafi/StudioProjects/MyApplication/COW/runs/detect/hump-detection2/weights/besthump.pt\"\nHOOF_MODEL_PATH = \"/Users/hammadsafi/StudioProjects/MyApplication/COW/foot/train/weights/best.pt\"\nIMAGE_PATH = \"/Users/hammadsafi/StudioProjects/MyApplication/COW/Sahiwal-Cattle.jpg\"\nOUTPUT_DIR = \"output\"\nCLASS_NAME = \"hoof\"\nMIN_CONTOUR_AREA = 50\nREAL_COW_HEIGHT_FT = 3  # Real height of the cow in feet\nPIXEL_TO_SQFT = None  # This will be calculated dynamically\n# ---------- CONSTANTS ----------\ndef calculate_ft_per_pixel(cow_bbox_height):",
+        "peekOfCode": "HUMP_MODEL_PATH = \"/Users/hammadsafi/StudioProjects/MyApplication/COW/runs/detect/hump-detection2/weights/besthump.pt\"\nHOOF_MODEL_PATH = \"/Users/hammadsafi/StudioProjects/MyApplication/COW/foot/train/weights/best.pt\"\nIMAGE_PATH = \"/Users/hammadsafi/StudioProjects/MyApplication/COW/foot/Foot-2/test/images/IMG_20210709_105648_2_jpg.rf.b9d374543ae858f01620b7c853f87670.jpg\"\nOUTPUT_DIR = \"output\"\nCLASS_NAME = \"hoof\"\nMIN_CONTOUR_AREA = 50\nREAL_COW_HEIGHT_FT = 3  # Real height of the cow in feet\nPIXEL_TO_SQFT = None  # This will be calculated dynamically\n# ---------- CONSTANTS ----------\ndef calculate_ft_per_pixel(cow_bbox_height):",
         "detail": "work",
         "documentation": {}
     },
@@ -289,7 +289,7 @@
         "kind": 5,
         "importPath": "work",
         "description": "work",
-        "peekOfCode": "HOOF_MODEL_PATH = \"/Users/hammadsafi/StudioProjects/MyApplication/COW/foot/train/weights/best.pt\"\nIMAGE_PATH = \"/Users/hammadsafi/StudioProjects/MyApplication/COW/Sahiwal-Cattle.jpg\"\nOUTPUT_DIR = \"output\"\nCLASS_NAME = \"hoof\"\nMIN_CONTOUR_AREA = 50\nREAL_COW_HEIGHT_FT = 3  # Real height of the cow in feet\nPIXEL_TO_SQFT = None  # This will be calculated dynamically\n# ---------- CONSTANTS ----------\ndef calculate_ft_per_pixel(cow_bbox_height):\n    \"\"\"Calculate feet per pixel based on the detected cow's height in pixels.\"\"\"",
+        "peekOfCode": "HOOF_MODEL_PATH = \"/Users/hammadsafi/StudioProjects/MyApplication/COW/foot/train/weights/best.pt\"\nIMAGE_PATH = \"/Users/hammadsafi/StudioProjects/MyApplication/COW/foot/Foot-2/test/images/IMG_20210709_105648_2_jpg.rf.b9d374543ae858f01620b7c853f87670.jpg\"\nOUTPUT_DIR = \"output\"\nCLASS_NAME = \"hoof\"\nMIN_CONTOUR_AREA = 50\nREAL_COW_HEIGHT_FT = 3  # Real height of the cow in feet\nPIXEL_TO_SQFT = None  # This will be calculated dynamically\n# ---------- CONSTANTS ----------\ndef calculate_ft_per_pixel(cow_bbox_height):\n    \"\"\"Calculate feet per pixel based on the detected cow's height in pixels.\"\"\"",
         "detail": "work",
         "documentation": {}
     },
@@ -298,7 +298,7 @@
         "kind": 5,
         "importPath": "work",
         "description": "work",
-        "peekOfCode": "IMAGE_PATH = \"/Users/hammadsafi/StudioProjects/MyApplication/COW/Sahiwal-Cattle.jpg\"\nOUTPUT_DIR = \"output\"\nCLASS_NAME = \"hoof\"\nMIN_CONTOUR_AREA = 50\nREAL_COW_HEIGHT_FT = 3  # Real height of the cow in feet\nPIXEL_TO_SQFT = None  # This will be calculated dynamically\n# ---------- CONSTANTS ----------\ndef calculate_ft_per_pixel(cow_bbox_height):\n    \"\"\"Calculate feet per pixel based on the detected cow's height in pixels.\"\"\"\n    ft_per_pixel = REAL_COW_HEIGHT_FT / cow_bbox_height",
+        "peekOfCode": "IMAGE_PATH = \"/Users/hammadsafi/StudioProjects/MyApplication/COW/foot/Foot-2/test/images/IMG_20210709_105648_2_jpg.rf.b9d374543ae858f01620b7c853f87670.jpg\"\nOUTPUT_DIR = \"output\"\nCLASS_NAME = \"hoof\"\nMIN_CONTOUR_AREA = 50\nREAL_COW_HEIGHT_FT = 3  # Real height of the cow in feet\nPIXEL_TO_SQFT = None  # This will be calculated dynamically\n# ---------- CONSTANTS ----------\ndef calculate_ft_per_pixel(cow_bbox_height):\n    \"\"\"Calculate feet per pixel based on the detected cow's height in pixels.\"\"\"\n    ft_per_pixel = REAL_COW_HEIGHT_FT / cow_bbox_height",
         "detail": "work",
         "documentation": {}
     },
