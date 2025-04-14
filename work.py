@@ -28,6 +28,8 @@ def detect_hump(image):
 
     cow_detected = False
     hump_area_sqft = None
+    hump_detected= False
+    FT_PER_PIXEL = None
 
     for box, cls in zip(results.boxes.xyxy.cpu().numpy(), results.boxes.cls.cpu().numpy()):
         x1, y1, x2, y2 = map(int, box)
