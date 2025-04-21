@@ -26,199 +26,12 @@
         "documentation": {}
     },
     {
-        "label": "YOLO",
-        "importPath": "ultralytics",
-        "description": "ultralytics",
-        "isExtraImport": true,
-        "detail": "ultralytics",
-        "documentation": {}
-    },
-    {
-        "label": "YOLO",
-        "importPath": "ultralytics",
-        "description": "ultralytics",
-        "isExtraImport": true,
-        "detail": "ultralytics",
-        "documentation": {}
-    },
-    {
         "label": "os",
         "kind": 6,
         "isExtraImport": true,
         "importPath": "os",
         "description": "os",
         "detail": "os",
-        "documentation": {}
-    },
-    {
-        "label": "get_hoof_angle",
-        "kind": 2,
-        "importPath": "foot.foot",
-        "description": "foot.foot",
-        "peekOfCode": "def get_hoof_angle(hoof_crop, bbox_coords):\n    \"\"\"Estimate angle between green line (Side 2) and new connecting line.\"\"\"\n    if hoof_crop.shape[0] < 10 or hoof_crop.shape[1] < 10:\n        print(\"Debug: Hoof crop too small.\")\n        return None, None, None\n    # Preprocess\n    gray = cv2.cvtColor(hoof_crop, cv2.COLOR_BGR2GRAY)\n    blurred = cv2.GaussianBlur(gray, (5, 5), 0)\n    binary_mask = cv2.adaptiveThreshold(\n        blurred, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY_INV, 11, 2",
-        "detail": "foot.foot",
-        "documentation": {}
-    },
-    {
-        "label": "draw_angle_overlay",
-        "kind": 2,
-        "importPath": "foot.foot",
-        "description": "foot.foot",
-        "peekOfCode": "def draw_angle_overlay(image, rect, angle, bbox_coords, box):\n    \"\"\"Draw red rotated rectangle, colored sides, and new connecting line.\"\"\"\n    # Draw rotated rectangle (red)\n    box = np.intp(box)\n    cv2.drawContours(image, [box], 0, (0, 0, 255), 2)\n    # Draw each side with a different color\n    cv2.line(image, tuple(box[0].astype(int)), tuple(box[1].astype(int)), (255, 0, 0), 2)  # Side 1 - Blue\n    cv2.line(image, tuple(box[1].astype(int)), tuple(box[2].astype(int)), (0, 255, 0), 2)  # Side 2 - Green\n    cv2.line(image, tuple(box[2].astype(int)), tuple(box[3].astype(int)), (0, 255, 255), 2)  # Side 3 - Yellow\n    cv2.line(image, tuple(box[3].astype(int)), tuple(box[0].astype(int)), (255, 0, 255), 2)  # Side 4 - Magenta",
-        "detail": "foot.foot",
-        "documentation": {}
-    },
-    {
-        "label": "main",
-        "kind": 2,
-        "importPath": "foot.foot",
-        "description": "foot.foot",
-        "peekOfCode": "def main():\n    \"\"\"Process image for hoof detection and angle estimation.\"\"\"\n    os.makedirs(OUTPUT_DIR, exist_ok=True)\n    # Load model\n    try:\n        model = YOLO(MODEL_PATH)\n        print(\"Debug: Model loaded. Class names:\", model.names)\n    except Exception as e:\n        print(f\"❌ Error loading model: {e}\")\n        return",
-        "detail": "foot.foot",
-        "documentation": {}
-    },
-    {
-        "label": "MODEL_PATH",
-        "kind": 5,
-        "importPath": "foot.foot",
-        "description": "foot.foot",
-        "peekOfCode": "MODEL_PATH = \"/Users/hammadsafi/StudioProjects/MyApplication/COW/foot/train/weights/best.pt\"\nIMAGE_PATH = \"/Users/hammadsafi/StudioProjects/MyApplication/COW/foot/Foot-2/test/images/IMG_20210709_105647_1_jpg.rf.df215aa8b25bba18e5f40b8fb00e9e44.jpg\"\nCLASS_NAME = \"hoof\"\nMIN_CONTOUR_AREA = 50\nOUTPUT_DIR = \"output\"\n# -----------------------------------\ndef get_hoof_angle(hoof_crop, bbox_coords):\n    \"\"\"Estimate angle between green line (Side 2) and new connecting line.\"\"\"\n    if hoof_crop.shape[0] < 10 or hoof_crop.shape[1] < 10:\n        print(\"Debug: Hoof crop too small.\")",
-        "detail": "foot.foot",
-        "documentation": {}
-    },
-    {
-        "label": "IMAGE_PATH",
-        "kind": 5,
-        "importPath": "foot.foot",
-        "description": "foot.foot",
-        "peekOfCode": "IMAGE_PATH = \"/Users/hammadsafi/StudioProjects/MyApplication/COW/foot/Foot-2/test/images/IMG_20210709_105647_1_jpg.rf.df215aa8b25bba18e5f40b8fb00e9e44.jpg\"\nCLASS_NAME = \"hoof\"\nMIN_CONTOUR_AREA = 50\nOUTPUT_DIR = \"output\"\n# -----------------------------------\ndef get_hoof_angle(hoof_crop, bbox_coords):\n    \"\"\"Estimate angle between green line (Side 2) and new connecting line.\"\"\"\n    if hoof_crop.shape[0] < 10 or hoof_crop.shape[1] < 10:\n        print(\"Debug: Hoof crop too small.\")\n        return None, None, None",
-        "detail": "foot.foot",
-        "documentation": {}
-    },
-    {
-        "label": "CLASS_NAME",
-        "kind": 5,
-        "importPath": "foot.foot",
-        "description": "foot.foot",
-        "peekOfCode": "CLASS_NAME = \"hoof\"\nMIN_CONTOUR_AREA = 50\nOUTPUT_DIR = \"output\"\n# -----------------------------------\ndef get_hoof_angle(hoof_crop, bbox_coords):\n    \"\"\"Estimate angle between green line (Side 2) and new connecting line.\"\"\"\n    if hoof_crop.shape[0] < 10 or hoof_crop.shape[1] < 10:\n        print(\"Debug: Hoof crop too small.\")\n        return None, None, None\n    # Preprocess",
-        "detail": "foot.foot",
-        "documentation": {}
-    },
-    {
-        "label": "MIN_CONTOUR_AREA",
-        "kind": 5,
-        "importPath": "foot.foot",
-        "description": "foot.foot",
-        "peekOfCode": "MIN_CONTOUR_AREA = 50\nOUTPUT_DIR = \"output\"\n# -----------------------------------\ndef get_hoof_angle(hoof_crop, bbox_coords):\n    \"\"\"Estimate angle between green line (Side 2) and new connecting line.\"\"\"\n    if hoof_crop.shape[0] < 10 or hoof_crop.shape[1] < 10:\n        print(\"Debug: Hoof crop too small.\")\n        return None, None, None\n    # Preprocess\n    gray = cv2.cvtColor(hoof_crop, cv2.COLOR_BGR2GRAY)",
-        "detail": "foot.foot",
-        "documentation": {}
-    },
-    {
-        "label": "OUTPUT_DIR",
-        "kind": 5,
-        "importPath": "foot.foot",
-        "description": "foot.foot",
-        "peekOfCode": "OUTPUT_DIR = \"output\"\n# -----------------------------------\ndef get_hoof_angle(hoof_crop, bbox_coords):\n    \"\"\"Estimate angle between green line (Side 2) and new connecting line.\"\"\"\n    if hoof_crop.shape[0] < 10 or hoof_crop.shape[1] < 10:\n        print(\"Debug: Hoof crop too small.\")\n        return None, None, None\n    # Preprocess\n    gray = cv2.cvtColor(hoof_crop, cv2.COLOR_BGR2GRAY)\n    blurred = cv2.GaussianBlur(gray, (5, 5), 0)",
-        "detail": "foot.foot",
-        "documentation": {}
-    },
-    {
-        "label": "model",
-        "kind": 5,
-        "importPath": "hump",
-        "description": "hump",
-        "peekOfCode": "model = YOLO(\"/Users/hammadsafi/StudioProjects/MyApplication/COW/runs/detect/hump-detection2/weights/besthump.pt\")\n# Load image\nimage = cv2.imread(\"/Users/hammadsafi/StudioProjects/MyApplication/COW/foot/Foot-2/test/images/IMG_20210709_105647_1_jpg.rf.df215aa8b25bba18e5f40b8fb00e9e44.jpg\")\noutput_image = image.copy()\n# Constants\nCOW_PIXEL_HEIGHT = 3643\nREAL_COW_HEIGHT_FT = 3\nFT_PER_PIXEL = REAL_COW_HEIGHT_FT / COW_PIXEL_HEIGHT\nPIXEL_TO_SQFT = FT_PER_PIXEL ** 2\n# Run inference",
-        "detail": "hump",
-        "documentation": {}
-    },
-    {
-        "label": "image",
-        "kind": 5,
-        "importPath": "hump",
-        "description": "hump",
-        "peekOfCode": "image = cv2.imread(\"/Users/hammadsafi/StudioProjects/MyApplication/COW/foot/Foot-2/test/images/IMG_20210709_105647_1_jpg.rf.df215aa8b25bba18e5f40b8fb00e9e44.jpg\")\noutput_image = image.copy()\n# Constants\nCOW_PIXEL_HEIGHT = 3643\nREAL_COW_HEIGHT_FT = 3\nFT_PER_PIXEL = REAL_COW_HEIGHT_FT / COW_PIXEL_HEIGHT\nPIXEL_TO_SQFT = FT_PER_PIXEL ** 2\n# Run inference\nresults = model(image)[0]\ncow_detected = False",
-        "detail": "hump",
-        "documentation": {}
-    },
-    {
-        "label": "output_image",
-        "kind": 5,
-        "importPath": "hump",
-        "description": "hump",
-        "peekOfCode": "output_image = image.copy()\n# Constants\nCOW_PIXEL_HEIGHT = 3643\nREAL_COW_HEIGHT_FT = 3\nFT_PER_PIXEL = REAL_COW_HEIGHT_FT / COW_PIXEL_HEIGHT\nPIXEL_TO_SQFT = FT_PER_PIXEL ** 2\n# Run inference\nresults = model(image)[0]\ncow_detected = False\nhump_bbox = None",
-        "detail": "hump",
-        "documentation": {}
-    },
-    {
-        "label": "COW_PIXEL_HEIGHT",
-        "kind": 5,
-        "importPath": "hump",
-        "description": "hump",
-        "peekOfCode": "COW_PIXEL_HEIGHT = 3643\nREAL_COW_HEIGHT_FT = 3\nFT_PER_PIXEL = REAL_COW_HEIGHT_FT / COW_PIXEL_HEIGHT\nPIXEL_TO_SQFT = FT_PER_PIXEL ** 2\n# Run inference\nresults = model(image)[0]\ncow_detected = False\nhump_bbox = None\nhump_area_sqft = None\n# Draw boxes and calculate area",
-        "detail": "hump",
-        "documentation": {}
-    },
-    {
-        "label": "REAL_COW_HEIGHT_FT",
-        "kind": 5,
-        "importPath": "hump",
-        "description": "hump",
-        "peekOfCode": "REAL_COW_HEIGHT_FT = 3\nFT_PER_PIXEL = REAL_COW_HEIGHT_FT / COW_PIXEL_HEIGHT\nPIXEL_TO_SQFT = FT_PER_PIXEL ** 2\n# Run inference\nresults = model(image)[0]\ncow_detected = False\nhump_bbox = None\nhump_area_sqft = None\n# Draw boxes and calculate area\nfor box, cls in zip(results.boxes.xyxy.cpu().numpy(), results.boxes.cls.cpu().numpy()):",
-        "detail": "hump",
-        "documentation": {}
-    },
-    {
-        "label": "FT_PER_PIXEL",
-        "kind": 5,
-        "importPath": "hump",
-        "description": "hump",
-        "peekOfCode": "FT_PER_PIXEL = REAL_COW_HEIGHT_FT / COW_PIXEL_HEIGHT\nPIXEL_TO_SQFT = FT_PER_PIXEL ** 2\n# Run inference\nresults = model(image)[0]\ncow_detected = False\nhump_bbox = None\nhump_area_sqft = None\n# Draw boxes and calculate area\nfor box, cls in zip(results.boxes.xyxy.cpu().numpy(), results.boxes.cls.cpu().numpy()):\n    x1, y1, x2, y2 = map(int, box)",
-        "detail": "hump",
-        "documentation": {}
-    },
-    {
-        "label": "PIXEL_TO_SQFT",
-        "kind": 5,
-        "importPath": "hump",
-        "description": "hump",
-        "peekOfCode": "PIXEL_TO_SQFT = FT_PER_PIXEL ** 2\n# Run inference\nresults = model(image)[0]\ncow_detected = False\nhump_bbox = None\nhump_area_sqft = None\n# Draw boxes and calculate area\nfor box, cls in zip(results.boxes.xyxy.cpu().numpy(), results.boxes.cls.cpu().numpy()):\n    x1, y1, x2, y2 = map(int, box)\n    width = x2 - x1",
-        "detail": "hump",
-        "documentation": {}
-    },
-    {
-        "label": "results",
-        "kind": 5,
-        "importPath": "hump",
-        "description": "hump",
-        "peekOfCode": "results = model(image)[0]\ncow_detected = False\nhump_bbox = None\nhump_area_sqft = None\n# Draw boxes and calculate area\nfor box, cls in zip(results.boxes.xyxy.cpu().numpy(), results.boxes.cls.cpu().numpy()):\n    x1, y1, x2, y2 = map(int, box)\n    width = x2 - x1\n    height = y2 - y1\n    area_pixels = width * height",
-        "detail": "hump",
-        "documentation": {}
-    },
-    {
-        "label": "cow_detected",
-        "kind": 5,
-        "importPath": "hump",
-        "description": "hump",
-        "peekOfCode": "cow_detected = False\nhump_bbox = None\nhump_area_sqft = None\n# Draw boxes and calculate area\nfor box, cls in zip(results.boxes.xyxy.cpu().numpy(), results.boxes.cls.cpu().numpy()):\n    x1, y1, x2, y2 = map(int, box)\n    width = x2 - x1\n    height = y2 - y1\n    area_pixels = width * height\n    if int(cls) == 0:  # Cow",
-        "detail": "hump",
-        "documentation": {}
-    },
-    {
-        "label": "hump_bbox",
-        "kind": 5,
-        "importPath": "hump",
-        "description": "hump",
-        "peekOfCode": "hump_bbox = None\nhump_area_sqft = None\n# Draw boxes and calculate area\nfor box, cls in zip(results.boxes.xyxy.cpu().numpy(), results.boxes.cls.cpu().numpy()):\n    x1, y1, x2, y2 = map(int, box)\n    width = x2 - x1\n    height = y2 - y1\n    area_pixels = width * height\n    if int(cls) == 0:  # Cow\n        cow_detected = True",
-        "detail": "hump",
-        "documentation": {}
-    },
-    {
-        "label": "hump_area_sqft",
-        "kind": 5,
-        "importPath": "hump",
-        "description": "hump",
-        "peekOfCode": "hump_area_sqft = None\n# Draw boxes and calculate area\nfor box, cls in zip(results.boxes.xyxy.cpu().numpy(), results.boxes.cls.cpu().numpy()):\n    x1, y1, x2, y2 = map(int, box)\n    width = x2 - x1\n    height = y2 - y1\n    area_pixels = width * height\n    if int(cls) == 0:  # Cow\n        cow_detected = True\n        cv2.rectangle(output_image, (x1, y1), (x2, y2), (255, 0, 0), 2)",
-        "detail": "hump",
         "documentation": {}
     },
     {
@@ -262,7 +75,7 @@
         "kind": 2,
         "importPath": "work",
         "description": "work",
-        "peekOfCode": "def detect_hoof_and_angle(image):\n    model = YOLO(HOOF_MODEL_PATH)\n    results = model(image)[0]\n    output_image = image.copy()\n    for i, box in enumerate(results.boxes):\n        cls = int(box.cls[0])\n        class_name = model.names[cls]\n        conf = float(box.conf[0])\n        if class_name.lower() == CLASS_NAME.lower():\n            x1, y1, x2, y2 = map(int, box.xyxy[0])",
+        "peekOfCode": "def detect_hoof_and_angle(image):\n    model = YOLO(HOOF_MODEL_PATH)\n    results = model(image)[0]\n    output_image = image.copy()\n    for box in results.boxes:\n        cls = int(box.cls[0])\n        class_name = model.names[cls]\n        conf = float(box.conf[0])\n        if class_name.lower() == CLASS_NAME.lower():\n            x1, y1, x2, y2 = map(int, box.xyxy[0])",
         "detail": "work",
         "documentation": {}
     },
@@ -280,7 +93,7 @@
         "kind": 5,
         "importPath": "work",
         "description": "work",
-        "peekOfCode": "HUMP_MODEL_PATH = \"/Users/hammadsafi/StudioProjects/MyApplication/COW/runs/detect/hump-detection2/weights/besthump.pt\"\nHOOF_MODEL_PATH = \"/Users/hammadsafi/StudioProjects/MyApplication/COW/foot/train/weights/best.pt\"\nIMAGE_PATH = \"/Users/hammadsafi/StudioProjects/MyApplication/COW/foot/Foot-2/test/images/IMG_20210709_105648_2_jpg.rf.b9d374543ae858f01620b7c853f87670.jpg\"\nOUTPUT_DIR = \"output\"\nCLASS_NAME = \"hoof\"\nMIN_CONTOUR_AREA = 50\nREAL_COW_HEIGHT_FT = 3  # Real height of the cow in feet\nPIXEL_TO_SQFT = None  # This will be calculated dynamically\n# ---------- CONSTANTS ----------\ndef calculate_ft_per_pixel(cow_bbox_height):",
+        "peekOfCode": "HUMP_MODEL_PATH = \"/Users/hammadsafi/StudioProjects/MyApplication/COW/runs/detect/cow_hump_hoof_yolov123/weights/best.pt\"\nHOOF_MODEL_PATH = \"/Users/hammadsafi/StudioProjects/MyApplication/COW/runs/detect/cow_hump_hoof_yolov123/weights/best.pt\"\nIMAGE_PATH = \"/Users/hammadsafi/StudioProjects/MyApplication/COW/big-red-brown-brahman-bull-600nw-2316454203.jpg.webp\"\nOUTPUT_DIR = \"output\"\nCLASS_NAME = \"hoof\"\nMIN_CONTOUR_AREA = 50\nREAL_COW_HEIGHT_FT = 3  # Real height of the cow in feet\nPIXEL_TO_SQFT = None  # This will be calculated dynamically\n# ---------- CONSTANTS ----------\ndef calculate_ft_per_pixel(cow_bbox_height):",
         "detail": "work",
         "documentation": {}
     },
@@ -289,7 +102,7 @@
         "kind": 5,
         "importPath": "work",
         "description": "work",
-        "peekOfCode": "HOOF_MODEL_PATH = \"/Users/hammadsafi/StudioProjects/MyApplication/COW/foot/train/weights/best.pt\"\nIMAGE_PATH = \"/Users/hammadsafi/StudioProjects/MyApplication/COW/foot/Foot-2/test/images/IMG_20210709_105648_2_jpg.rf.b9d374543ae858f01620b7c853f87670.jpg\"\nOUTPUT_DIR = \"output\"\nCLASS_NAME = \"hoof\"\nMIN_CONTOUR_AREA = 50\nREAL_COW_HEIGHT_FT = 3  # Real height of the cow in feet\nPIXEL_TO_SQFT = None  # This will be calculated dynamically\n# ---------- CONSTANTS ----------\ndef calculate_ft_per_pixel(cow_bbox_height):\n    \"\"\"Calculate feet per pixel based on the detected cow's height in pixels.\"\"\"",
+        "peekOfCode": "HOOF_MODEL_PATH = \"/Users/hammadsafi/StudioProjects/MyApplication/COW/runs/detect/cow_hump_hoof_yolov123/weights/best.pt\"\nIMAGE_PATH = \"/Users/hammadsafi/StudioProjects/MyApplication/COW/big-red-brown-brahman-bull-600nw-2316454203.jpg.webp\"\nOUTPUT_DIR = \"output\"\nCLASS_NAME = \"hoof\"\nMIN_CONTOUR_AREA = 50\nREAL_COW_HEIGHT_FT = 3  # Real height of the cow in feet\nPIXEL_TO_SQFT = None  # This will be calculated dynamically\n# ---------- CONSTANTS ----------\ndef calculate_ft_per_pixel(cow_bbox_height):\n    \"\"\"Calculate feet per pixel based on the detected cow's height in pixels.\"\"\"",
         "detail": "work",
         "documentation": {}
     },
@@ -298,7 +111,7 @@
         "kind": 5,
         "importPath": "work",
         "description": "work",
-        "peekOfCode": "IMAGE_PATH = \"/Users/hammadsafi/StudioProjects/MyApplication/COW/foot/Foot-2/test/images/IMG_20210709_105648_2_jpg.rf.b9d374543ae858f01620b7c853f87670.jpg\"\nOUTPUT_DIR = \"output\"\nCLASS_NAME = \"hoof\"\nMIN_CONTOUR_AREA = 50\nREAL_COW_HEIGHT_FT = 3  # Real height of the cow in feet\nPIXEL_TO_SQFT = None  # This will be calculated dynamically\n# ---------- CONSTANTS ----------\ndef calculate_ft_per_pixel(cow_bbox_height):\n    \"\"\"Calculate feet per pixel based on the detected cow's height in pixels.\"\"\"\n    ft_per_pixel = REAL_COW_HEIGHT_FT / cow_bbox_height",
+        "peekOfCode": "IMAGE_PATH = \"/Users/hammadsafi/StudioProjects/MyApplication/COW/big-red-brown-brahman-bull-600nw-2316454203.jpg.webp\"\nOUTPUT_DIR = \"output\"\nCLASS_NAME = \"hoof\"\nMIN_CONTOUR_AREA = 50\nREAL_COW_HEIGHT_FT = 3  # Real height of the cow in feet\nPIXEL_TO_SQFT = None  # This will be calculated dynamically\n# ---------- CONSTANTS ----------\ndef calculate_ft_per_pixel(cow_bbox_height):\n    \"\"\"Calculate feet per pixel based on the detected cow's height in pixels.\"\"\"\n    ft_per_pixel = REAL_COW_HEIGHT_FT / cow_bbox_height",
         "detail": "work",
         "documentation": {}
     },

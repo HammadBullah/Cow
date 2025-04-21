@@ -4,9 +4,9 @@ from ultralytics import YOLO
 import os
 
 # ---------- CONFIGURATION ----------
-HUMP_MODEL_PATH = "/Users/hammadsafi/StudioProjects/MyApplication/COW/runs/detect/hump-detection2/weights/besthump.pt"
-HOOF_MODEL_PATH = "/Users/hammadsafi/StudioProjects/MyApplication/COW/foot/train/weights/best.pt"
-IMAGE_PATH = "/Users/hammadsafi/StudioProjects/MyApplication/COW/foot/Foot-2/test/images/IMG_20210709_105648_2_jpg.rf.b9d374543ae858f01620b7c853f87670.jpg"
+HUMP_MODEL_PATH = "/Users/hammadsafi/StudioProjects/MyApplication/COW/runs/detect/cow_hump_hoof_yolov123/weights/best.pt"
+HOOF_MODEL_PATH = "/Users/hammadsafi/StudioProjects/MyApplication/COW/runs/detect/cow_hump_hoof_yolov123/weights/best.pt"
+IMAGE_PATH = "/Users/hammadsafi/StudioProjects/MyApplication/COW/big-red-brown-brahman-bull-600nw-2316454203.jpg.webp"
 OUTPUT_DIR = "output"
 CLASS_NAME = "hoof"
 MIN_CONTOUR_AREA = 50
@@ -125,7 +125,7 @@ def detect_hoof_and_angle(image):
     results = model(image)[0]
     output_image = image.copy()
 
-    for i, box in enumerate(results.boxes):
+    for box in results.boxes:
         cls = int(box.cls[0])
         class_name = model.names[cls]
         conf = float(box.conf[0])

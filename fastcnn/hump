@@ -1,0 +1,48 @@
+import os
+import torch
+from ultralytics import YOLO
+from roboflow import Roboflow
+
+# Define paths
+HOME = os.getcwd()
+dataset_location = "/Users/hammadsafi/StudioProjects/MyApplication/COW/fastcnn/Foot-4"
+data_yaml = os.path.join(dataset_location, "data.yaml")
+
+# Verify dataset path exists
+if not os.path.exists(dataset_location):
+    raise FileNotFoundError(f"Dataset path {dataset_location} does not exist.")
+if not os.path.exists(data_yaml):
+    raise FileNotFoundError(f"data.yaml not found at {data_yaml}. Please ensure it exists.")
+
+# Determine device (MPS for Apple Silicon, fallback to CPU)
+device = "mps" if torch.backends.mps.is_available() else "cpu"
+print(f"Using device: {device}")
+
+# Initialize YOLO model
+try:
+    # Try loading YOLOv12 with pre-trained weights
+    model = YOLO("yolov12.pt")  # Use pre-trained yolov12n weights (if available)
+except FileNotFoundError:
+    print("YOLOv12n.pt not found. Using YOLOv8n for training.")
+    model = YOLO("yolov8n.pt")  # Fallback to YOLOv8n pre-trained weights
+
+# Train the model
+results = model.train(
+    data=data_yaml,              # Path to the dataset configuration file
+    epochs=50,                   # Number of epochs (based on your previous setup)
+    imgsz=640,                   # Image size (consistent with prior 640x640)
+    batch=2,                    # Batch size (adjust based on system memory)
+    device=device,               # Use MPS or CPU
+    patience=20,                 # Early stopping if no improvement after 20 epochs
+    scale=0.5,                   # Data augmentation: random scaling
+    mosaic=1.0,                  # Mosaic augmentation to improve generalization
+    mixup=0.1,                   # Mixup augmentation for small dataset
+    copy_paste=0.1,              # Copy-paste augmentation to enhance object diversity
+    name="cow_hump_hoof_yolov12" # Name for the training run
+)
+
+# Evaluate the model on the validation set
+metrics = model.val()
+
+# Save the trained model
+model.export(format="pt")  # Export to PyTorch format
