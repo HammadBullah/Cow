@@ -39,16 +39,7 @@
         "kind": 2,
         "importPath": "work",
         "description": "work",
-        "peekOfCode": "def calculate_ft_per_pixel(cow_bbox_height):\n    \"\"\"Calculate feet per pixel based on the detected cow's height in pixels.\"\"\"\n    ft_per_pixel = REAL_COW_HEIGHT_FT / cow_bbox_height\n    print(\"[HUMP] Cow pixel:\", cow_bbox_height)\n    return ft_per_pixel\ndef detect_hump(image):\n    model = YOLO(HUMP_MODEL_PATH)\n    results = model(image)[0]\n    output_image = image.copy()\n    cow_detected = False",
-        "detail": "work",
-        "documentation": {}
-    },
-    {
-        "label": "detect_hump",
-        "kind": 2,
-        "importPath": "work",
-        "description": "work",
-        "peekOfCode": "def detect_hump(image):\n    model = YOLO(HUMP_MODEL_PATH)\n    results = model(image)[0]\n    output_image = image.copy()\n    cow_detected = False\n    hump_area_sqft = None\n    hump_detected= False\n    FT_PER_PIXEL = None\n    for box, cls in zip(results.boxes.xyxy.cpu().numpy(), results.boxes.cls.cpu().numpy()):\n        x1, y1, x2, y2 = map(int, box)",
+        "peekOfCode": "def calculate_ft_per_pixel(cow_bbox_height):\n    \"\"\"Calculate feet per pixel based on the detected cow's height in pixels.\"\"\"\n    ft_per_pixel = REAL_COW_HEIGHT_FT / cow_bbox_height\n    print(f\"[DETECTION] Cow pixel height: {cow_bbox_height}, ft/pixel: {ft_per_pixel:.4f}\")\n    return ft_per_pixel\ndef get_hoof_angle(hoof_crop, bbox_coords):\n    if hoof_crop.shape[0] < 10 or hoof_crop.shape[1] < 10:\n        print(\"[HOOF] Hoof crop too small:\", hoof_crop.shape)\n        return None, None, None\n    gray = cv2.cvtColor(hoof_crop, cv2.COLOR_BGR2GRAY)",
         "detail": "work",
         "documentation": {}
     },
@@ -57,7 +48,7 @@
         "kind": 2,
         "importPath": "work",
         "description": "work",
-        "peekOfCode": "def get_hoof_angle(hoof_crop, bbox_coords):\n    if hoof_crop.shape[0] < 10 or hoof_crop.shape[1] < 10:\n        return None, None, None\n    gray = cv2.cvtColor(hoof_crop, cv2.COLOR_BGR2GRAY)\n    blurred = cv2.GaussianBlur(gray, (5, 5), 0)\n    binary_mask = cv2.adaptiveThreshold(blurred, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C,\n                                        cv2.THRESH_BINARY_INV, 11, 2)\n    contours, _ = cv2.findContours(binary_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)\n    valid_contours = [cnt for cnt in contours if cv2.contourArea(cnt) > MIN_CONTOUR_AREA]\n    if not valid_contours:",
+        "peekOfCode": "def get_hoof_angle(hoof_crop, bbox_coords):\n    if hoof_crop.shape[0] < 10 or hoof_crop.shape[1] < 10:\n        print(\"[HOOF] Hoof crop too small:\", hoof_crop.shape)\n        return None, None, None\n    gray = cv2.cvtColor(hoof_crop, cv2.COLOR_BGR2GRAY)\n    blurred = cv2.GaussianBlur(gray, (5, 5), 0)\n    binary_mask = cv2.adaptiveThreshold(blurred, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C,\n                                        cv2.THRESH_BINARY_INV, 11, 2)\n    contours, _ = cv2.findContours(binary_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)\n    valid_contours = [cnt for cnt in contours if cv2.contourArea(cnt) > MIN_CONTOUR_AREA]",
         "detail": "work",
         "documentation": {}
     },
@@ -71,11 +62,11 @@
         "documentation": {}
     },
     {
-        "label": "detect_hoof_and_angle",
+        "label": "detect_objects_and_angle",
         "kind": 2,
         "importPath": "work",
         "description": "work",
-        "peekOfCode": "def detect_hoof_and_angle(image):\n    model = YOLO(HOOF_MODEL_PATH)\n    results = model(image)[0]\n    output_image = image.copy()\n    for box in results.boxes:\n        cls = int(box.cls[0])\n        class_name = model.names[cls]\n        conf = float(box.conf[0])\n        if class_name.lower() == CLASS_NAME.lower():\n            x1, y1, x2, y2 = map(int, box.xyxy[0])",
+        "peekOfCode": "def detect_objects_and_angle(image):\n    global PIXEL_TO_SQFT  # Declare global at the start of the function\n    try:\n        model = YOLO(MODEL_PATH)\n        print(\"[DETECTION] Model loaded successfully\")\n        print(\"[DETECTION] Model class names:\", model.names)\n    except Exception as e:\n        print(f\"[ERROR] Failed to load model: {e}\")\n        return image\n    results = model(image, conf=CONF_THRESHOLD, iou=IOU_THRESHOLD, verbose=True)[0]",
         "detail": "work",
         "documentation": {}
     },
@@ -84,34 +75,25 @@
         "kind": 2,
         "importPath": "work",
         "description": "work",
-        "peekOfCode": "def main():\n    os.makedirs(OUTPUT_DIR, exist_ok=True)\n    image = cv2.imread(IMAGE_PATH)\n    if image is None:\n        print(\"❌ Failed to load image.\")\n        return\n    # Detect hump and cow\n    hump_image = detect_hump(image)\n    # Detect hoof and angle\n    final_image = detect_hoof_and_angle(hump_image)",
+        "peekOfCode": "def main():\n    os.makedirs(OUTPUT_DIR, exist_ok=True)\n    # Supported image extensions\n    image_extensions = ('.jpg', '.jpeg', '.png')\n    # Get list of image files in INPUT_DIR\n    image_files = [f for f in os.listdir(INPUT_DIR) if f.lower().endswith(image_extensions)]\n    if not image_files:\n        print(f\"❌ No images found in {INPUT_DIR}\")\n        return\n    print(f\"[INFO] Found {len(image_files)} images in {INPUT_DIR}\")",
         "detail": "work",
         "documentation": {}
     },
     {
-        "label": "HUMP_MODEL_PATH",
+        "label": "MODEL_PATH",
         "kind": 5,
         "importPath": "work",
         "description": "work",
-        "peekOfCode": "HUMP_MODEL_PATH = \"/Users/hammadsafi/StudioProjects/MyApplication/COW/runs/detect/cow_hump_hoof_yolov123/weights/best.pt\"\nHOOF_MODEL_PATH = \"/Users/hammadsafi/StudioProjects/MyApplication/COW/runs/detect/cow_hump_hoof_yolov123/weights/best.pt\"\nIMAGE_PATH = \"/Users/hammadsafi/StudioProjects/MyApplication/COW/big-red-brown-brahman-bull-600nw-2316454203.jpg.webp\"\nOUTPUT_DIR = \"output\"\nCLASS_NAME = \"hoof\"\nMIN_CONTOUR_AREA = 50\nREAL_COW_HEIGHT_FT = 3  # Real height of the cow in feet\nPIXEL_TO_SQFT = None  # This will be calculated dynamically\n# ---------- CONSTANTS ----------\ndef calculate_ft_per_pixel(cow_bbox_height):",
+        "peekOfCode": "MODEL_PATH = \"/Users/hammadsafi/StudioProjects/MyApplication/COW/fastcnn/best.pt\"\nINPUT_DIR = \"/Users/hammadsafi/StudioProjects/MyApplication/COW/fastcnn/Foot-4/test/images\"  # Folder containing input images\nOUTPUT_DIR = \"output\"\nMIN_CONTOUR_AREA = 50\nREAL_COW_HEIGHT_FT = 3  # Real height of the cow in feet\nPIXEL_TO_SQFT = None  # This will be calculated dynamically\nCONF_THRESHOLD = 0.2  # Confidence threshold from your code\nIOU_THRESHOLD = 0.1  # Increased IoU threshold for NMS to reduce duplicates\n# ---------- CONSTANTS ----------\ndef calculate_ft_per_pixel(cow_bbox_height):",
         "detail": "work",
         "documentation": {}
     },
     {
-        "label": "HOOF_MODEL_PATH",
+        "label": "INPUT_DIR",
         "kind": 5,
         "importPath": "work",
         "description": "work",
-        "peekOfCode": "HOOF_MODEL_PATH = \"/Users/hammadsafi/StudioProjects/MyApplication/COW/runs/detect/cow_hump_hoof_yolov123/weights/best.pt\"\nIMAGE_PATH = \"/Users/hammadsafi/StudioProjects/MyApplication/COW/big-red-brown-brahman-bull-600nw-2316454203.jpg.webp\"\nOUTPUT_DIR = \"output\"\nCLASS_NAME = \"hoof\"\nMIN_CONTOUR_AREA = 50\nREAL_COW_HEIGHT_FT = 3  # Real height of the cow in feet\nPIXEL_TO_SQFT = None  # This will be calculated dynamically\n# ---------- CONSTANTS ----------\ndef calculate_ft_per_pixel(cow_bbox_height):\n    \"\"\"Calculate feet per pixel based on the detected cow's height in pixels.\"\"\"",
-        "detail": "work",
-        "documentation": {}
-    },
-    {
-        "label": "IMAGE_PATH",
-        "kind": 5,
-        "importPath": "work",
-        "description": "work",
-        "peekOfCode": "IMAGE_PATH = \"/Users/hammadsafi/StudioProjects/MyApplication/COW/big-red-brown-brahman-bull-600nw-2316454203.jpg.webp\"\nOUTPUT_DIR = \"output\"\nCLASS_NAME = \"hoof\"\nMIN_CONTOUR_AREA = 50\nREAL_COW_HEIGHT_FT = 3  # Real height of the cow in feet\nPIXEL_TO_SQFT = None  # This will be calculated dynamically\n# ---------- CONSTANTS ----------\ndef calculate_ft_per_pixel(cow_bbox_height):\n    \"\"\"Calculate feet per pixel based on the detected cow's height in pixels.\"\"\"\n    ft_per_pixel = REAL_COW_HEIGHT_FT / cow_bbox_height",
+        "peekOfCode": "INPUT_DIR = \"/Users/hammadsafi/StudioProjects/MyApplication/COW/fastcnn/Foot-4/test/images\"  # Folder containing input images\nOUTPUT_DIR = \"output\"\nMIN_CONTOUR_AREA = 50\nREAL_COW_HEIGHT_FT = 3  # Real height of the cow in feet\nPIXEL_TO_SQFT = None  # This will be calculated dynamically\nCONF_THRESHOLD = 0.2  # Confidence threshold from your code\nIOU_THRESHOLD = 0.1  # Increased IoU threshold for NMS to reduce duplicates\n# ---------- CONSTANTS ----------\ndef calculate_ft_per_pixel(cow_bbox_height):\n    \"\"\"Calculate feet per pixel based on the detected cow's height in pixels.\"\"\"",
         "detail": "work",
         "documentation": {}
     },
@@ -120,16 +102,7 @@
         "kind": 5,
         "importPath": "work",
         "description": "work",
-        "peekOfCode": "OUTPUT_DIR = \"output\"\nCLASS_NAME = \"hoof\"\nMIN_CONTOUR_AREA = 50\nREAL_COW_HEIGHT_FT = 3  # Real height of the cow in feet\nPIXEL_TO_SQFT = None  # This will be calculated dynamically\n# ---------- CONSTANTS ----------\ndef calculate_ft_per_pixel(cow_bbox_height):\n    \"\"\"Calculate feet per pixel based on the detected cow's height in pixels.\"\"\"\n    ft_per_pixel = REAL_COW_HEIGHT_FT / cow_bbox_height\n    print(\"[HUMP] Cow pixel:\", cow_bbox_height)",
-        "detail": "work",
-        "documentation": {}
-    },
-    {
-        "label": "CLASS_NAME",
-        "kind": 5,
-        "importPath": "work",
-        "description": "work",
-        "peekOfCode": "CLASS_NAME = \"hoof\"\nMIN_CONTOUR_AREA = 50\nREAL_COW_HEIGHT_FT = 3  # Real height of the cow in feet\nPIXEL_TO_SQFT = None  # This will be calculated dynamically\n# ---------- CONSTANTS ----------\ndef calculate_ft_per_pixel(cow_bbox_height):\n    \"\"\"Calculate feet per pixel based on the detected cow's height in pixels.\"\"\"\n    ft_per_pixel = REAL_COW_HEIGHT_FT / cow_bbox_height\n    print(\"[HUMP] Cow pixel:\", cow_bbox_height)\n    return ft_per_pixel",
+        "peekOfCode": "OUTPUT_DIR = \"output\"\nMIN_CONTOUR_AREA = 50\nREAL_COW_HEIGHT_FT = 3  # Real height of the cow in feet\nPIXEL_TO_SQFT = None  # This will be calculated dynamically\nCONF_THRESHOLD = 0.2  # Confidence threshold from your code\nIOU_THRESHOLD = 0.1  # Increased IoU threshold for NMS to reduce duplicates\n# ---------- CONSTANTS ----------\ndef calculate_ft_per_pixel(cow_bbox_height):\n    \"\"\"Calculate feet per pixel based on the detected cow's height in pixels.\"\"\"\n    ft_per_pixel = REAL_COW_HEIGHT_FT / cow_bbox_height",
         "detail": "work",
         "documentation": {}
     },
@@ -138,7 +111,7 @@
         "kind": 5,
         "importPath": "work",
         "description": "work",
-        "peekOfCode": "MIN_CONTOUR_AREA = 50\nREAL_COW_HEIGHT_FT = 3  # Real height of the cow in feet\nPIXEL_TO_SQFT = None  # This will be calculated dynamically\n# ---------- CONSTANTS ----------\ndef calculate_ft_per_pixel(cow_bbox_height):\n    \"\"\"Calculate feet per pixel based on the detected cow's height in pixels.\"\"\"\n    ft_per_pixel = REAL_COW_HEIGHT_FT / cow_bbox_height\n    print(\"[HUMP] Cow pixel:\", cow_bbox_height)\n    return ft_per_pixel\ndef detect_hump(image):",
+        "peekOfCode": "MIN_CONTOUR_AREA = 50\nREAL_COW_HEIGHT_FT = 3  # Real height of the cow in feet\nPIXEL_TO_SQFT = None  # This will be calculated dynamically\nCONF_THRESHOLD = 0.2  # Confidence threshold from your code\nIOU_THRESHOLD = 0.1  # Increased IoU threshold for NMS to reduce duplicates\n# ---------- CONSTANTS ----------\ndef calculate_ft_per_pixel(cow_bbox_height):\n    \"\"\"Calculate feet per pixel based on the detected cow's height in pixels.\"\"\"\n    ft_per_pixel = REAL_COW_HEIGHT_FT / cow_bbox_height\n    print(f\"[DETECTION] Cow pixel height: {cow_bbox_height}, ft/pixel: {ft_per_pixel:.4f}\")",
         "detail": "work",
         "documentation": {}
     },
@@ -147,7 +120,7 @@
         "kind": 5,
         "importPath": "work",
         "description": "work",
-        "peekOfCode": "REAL_COW_HEIGHT_FT = 3  # Real height of the cow in feet\nPIXEL_TO_SQFT = None  # This will be calculated dynamically\n# ---------- CONSTANTS ----------\ndef calculate_ft_per_pixel(cow_bbox_height):\n    \"\"\"Calculate feet per pixel based on the detected cow's height in pixels.\"\"\"\n    ft_per_pixel = REAL_COW_HEIGHT_FT / cow_bbox_height\n    print(\"[HUMP] Cow pixel:\", cow_bbox_height)\n    return ft_per_pixel\ndef detect_hump(image):\n    model = YOLO(HUMP_MODEL_PATH)",
+        "peekOfCode": "REAL_COW_HEIGHT_FT = 3  # Real height of the cow in feet\nPIXEL_TO_SQFT = None  # This will be calculated dynamically\nCONF_THRESHOLD = 0.2  # Confidence threshold from your code\nIOU_THRESHOLD = 0.1  # Increased IoU threshold for NMS to reduce duplicates\n# ---------- CONSTANTS ----------\ndef calculate_ft_per_pixel(cow_bbox_height):\n    \"\"\"Calculate feet per pixel based on the detected cow's height in pixels.\"\"\"\n    ft_per_pixel = REAL_COW_HEIGHT_FT / cow_bbox_height\n    print(f\"[DETECTION] Cow pixel height: {cow_bbox_height}, ft/pixel: {ft_per_pixel:.4f}\")\n    return ft_per_pixel",
         "detail": "work",
         "documentation": {}
     },
@@ -156,7 +129,25 @@
         "kind": 5,
         "importPath": "work",
         "description": "work",
-        "peekOfCode": "PIXEL_TO_SQFT = None  # This will be calculated dynamically\n# ---------- CONSTANTS ----------\ndef calculate_ft_per_pixel(cow_bbox_height):\n    \"\"\"Calculate feet per pixel based on the detected cow's height in pixels.\"\"\"\n    ft_per_pixel = REAL_COW_HEIGHT_FT / cow_bbox_height\n    print(\"[HUMP] Cow pixel:\", cow_bbox_height)\n    return ft_per_pixel\ndef detect_hump(image):\n    model = YOLO(HUMP_MODEL_PATH)\n    results = model(image)[0]",
+        "peekOfCode": "PIXEL_TO_SQFT = None  # This will be calculated dynamically\nCONF_THRESHOLD = 0.2  # Confidence threshold from your code\nIOU_THRESHOLD = 0.1  # Increased IoU threshold for NMS to reduce duplicates\n# ---------- CONSTANTS ----------\ndef calculate_ft_per_pixel(cow_bbox_height):\n    \"\"\"Calculate feet per pixel based on the detected cow's height in pixels.\"\"\"\n    ft_per_pixel = REAL_COW_HEIGHT_FT / cow_bbox_height\n    print(f\"[DETECTION] Cow pixel height: {cow_bbox_height}, ft/pixel: {ft_per_pixel:.4f}\")\n    return ft_per_pixel\ndef get_hoof_angle(hoof_crop, bbox_coords):",
+        "detail": "work",
+        "documentation": {}
+    },
+    {
+        "label": "CONF_THRESHOLD",
+        "kind": 5,
+        "importPath": "work",
+        "description": "work",
+        "peekOfCode": "CONF_THRESHOLD = 0.2  # Confidence threshold from your code\nIOU_THRESHOLD = 0.1  # Increased IoU threshold for NMS to reduce duplicates\n# ---------- CONSTANTS ----------\ndef calculate_ft_per_pixel(cow_bbox_height):\n    \"\"\"Calculate feet per pixel based on the detected cow's height in pixels.\"\"\"\n    ft_per_pixel = REAL_COW_HEIGHT_FT / cow_bbox_height\n    print(f\"[DETECTION] Cow pixel height: {cow_bbox_height}, ft/pixel: {ft_per_pixel:.4f}\")\n    return ft_per_pixel\ndef get_hoof_angle(hoof_crop, bbox_coords):\n    if hoof_crop.shape[0] < 10 or hoof_crop.shape[1] < 10:",
+        "detail": "work",
+        "documentation": {}
+    },
+    {
+        "label": "IOU_THRESHOLD",
+        "kind": 5,
+        "importPath": "work",
+        "description": "work",
+        "peekOfCode": "IOU_THRESHOLD = 0.1  # Increased IoU threshold for NMS to reduce duplicates\n# ---------- CONSTANTS ----------\ndef calculate_ft_per_pixel(cow_bbox_height):\n    \"\"\"Calculate feet per pixel based on the detected cow's height in pixels.\"\"\"\n    ft_per_pixel = REAL_COW_HEIGHT_FT / cow_bbox_height\n    print(f\"[DETECTION] Cow pixel height: {cow_bbox_height}, ft/pixel: {ft_per_pixel:.4f}\")\n    return ft_per_pixel\ndef get_hoof_angle(hoof_crop, bbox_coords):\n    if hoof_crop.shape[0] < 10 or hoof_crop.shape[1] < 10:\n        print(\"[HOOF] Hoof crop too small:\", hoof_crop.shape)",
         "detail": "work",
         "documentation": {}
     }
