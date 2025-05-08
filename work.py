@@ -4,13 +4,13 @@ from ultralytics import YOLO
 import os
 
 # ---------- CONFIGURATION ----------
-MODEL_PATH = "/Users/hammadsafi/StudioProjects/MyApplication/COW/fastcnn/best.pt"
+MODEL_PATH = "/Users/hammadsafi/StudioProjects/MyApplication/COW/fastcnn/best-2.pt"
 INPUT_DIR = "/Users/hammadsafi/StudioProjects/MyApplication/COW/fastcnn/Foot-4/test/images"  # Folder containing input images
 OUTPUT_DIR = "output"
 MIN_CONTOUR_AREA = 50
 REAL_COW_HEIGHT_FT = 3  # Real height of the cow in feet
 PIXEL_TO_SQFT = None  # This will be calculated dynamically
-CONF_THRESHOLD = 0.2  # Confidence threshold from your code
+CONF_THRESHOLD = 0.1  # Confidence threshold from your code
 IOU_THRESHOLD = 0.1  # Increased IoU threshold for NMS to reduce duplicates
 
 # ---------- CONSTANTS ----------

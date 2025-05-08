@@ -1,5 +1,23 @@
 [
     {
+        "label": "ffmpeg",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "ffmpeg",
+        "description": "ffmpeg",
+        "detail": "ffmpeg",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
         "label": "cv2",
         "kind": 6,
         "isExtraImport": true,
@@ -26,12 +44,12 @@
         "documentation": {}
     },
     {
-        "label": "os",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "os",
-        "description": "os",
-        "detail": "os",
+        "label": "compress_video",
+        "kind": 2,
+        "importPath": "movie",
+        "description": "movie",
+        "peekOfCode": "def compress_video(input_path, output_path, target_resolution=(1280, 720), bitrate=\"1000k\"):\n    \"\"\"\n    Compress a video using FFmpeg by reducing resolution and bitrate.\n    Args:\n        input_path (str): Path to input video file\n        output_path (str): Path to save compressed video\n        target_resolution (tuple): Desired resolution (width, height)\n        bitrate (str): Target bitrate (e.g., '1000k' for 1000 kbps)\n    \"\"\"\n    try:",
+        "detail": "movie",
         "documentation": {}
     },
     {
@@ -84,7 +102,7 @@
         "kind": 5,
         "importPath": "work",
         "description": "work",
-        "peekOfCode": "MODEL_PATH = \"/Users/hammadsafi/StudioProjects/MyApplication/COW/fastcnn/best.pt\"\nINPUT_DIR = \"/Users/hammadsafi/StudioProjects/MyApplication/COW/fastcnn/Foot-4/test/images\"  # Folder containing input images\nOUTPUT_DIR = \"output\"\nMIN_CONTOUR_AREA = 50\nREAL_COW_HEIGHT_FT = 3  # Real height of the cow in feet\nPIXEL_TO_SQFT = None  # This will be calculated dynamically\nCONF_THRESHOLD = 0.2  # Confidence threshold from your code\nIOU_THRESHOLD = 0.1  # Increased IoU threshold for NMS to reduce duplicates\n# ---------- CONSTANTS ----------\ndef calculate_ft_per_pixel(cow_bbox_height):",
+        "peekOfCode": "MODEL_PATH = \"/Users/hammadsafi/StudioProjects/MyApplication/COW/fastcnn/best-2.pt\"\nINPUT_DIR = \"/Users/hammadsafi/StudioProjects/MyApplication/COW/fastcnn/Foot-4/test/images\"  # Folder containing input images\nOUTPUT_DIR = \"output\"\nMIN_CONTOUR_AREA = 50\nREAL_COW_HEIGHT_FT = 3  # Real height of the cow in feet\nPIXEL_TO_SQFT = None  # This will be calculated dynamically\nCONF_THRESHOLD = 0.1  # Confidence threshold from your code\nIOU_THRESHOLD = 0.1  # Increased IoU threshold for NMS to reduce duplicates\n# ---------- CONSTANTS ----------\ndef calculate_ft_per_pixel(cow_bbox_height):",
         "detail": "work",
         "documentation": {}
     },
@@ -93,7 +111,7 @@
         "kind": 5,
         "importPath": "work",
         "description": "work",
-        "peekOfCode": "INPUT_DIR = \"/Users/hammadsafi/StudioProjects/MyApplication/COW/fastcnn/Foot-4/test/images\"  # Folder containing input images\nOUTPUT_DIR = \"output\"\nMIN_CONTOUR_AREA = 50\nREAL_COW_HEIGHT_FT = 3  # Real height of the cow in feet\nPIXEL_TO_SQFT = None  # This will be calculated dynamically\nCONF_THRESHOLD = 0.2  # Confidence threshold from your code\nIOU_THRESHOLD = 0.1  # Increased IoU threshold for NMS to reduce duplicates\n# ---------- CONSTANTS ----------\ndef calculate_ft_per_pixel(cow_bbox_height):\n    \"\"\"Calculate feet per pixel based on the detected cow's height in pixels.\"\"\"",
+        "peekOfCode": "INPUT_DIR = \"/Users/hammadsafi/StudioProjects/MyApplication/COW/fastcnn/Foot-4/test/images\"  # Folder containing input images\nOUTPUT_DIR = \"output\"\nMIN_CONTOUR_AREA = 50\nREAL_COW_HEIGHT_FT = 3  # Real height of the cow in feet\nPIXEL_TO_SQFT = None  # This will be calculated dynamically\nCONF_THRESHOLD = 0.1  # Confidence threshold from your code\nIOU_THRESHOLD = 0.1  # Increased IoU threshold for NMS to reduce duplicates\n# ---------- CONSTANTS ----------\ndef calculate_ft_per_pixel(cow_bbox_height):\n    \"\"\"Calculate feet per pixel based on the detected cow's height in pixels.\"\"\"",
         "detail": "work",
         "documentation": {}
     },
@@ -102,7 +120,7 @@
         "kind": 5,
         "importPath": "work",
         "description": "work",
-        "peekOfCode": "OUTPUT_DIR = \"output\"\nMIN_CONTOUR_AREA = 50\nREAL_COW_HEIGHT_FT = 3  # Real height of the cow in feet\nPIXEL_TO_SQFT = None  # This will be calculated dynamically\nCONF_THRESHOLD = 0.2  # Confidence threshold from your code\nIOU_THRESHOLD = 0.1  # Increased IoU threshold for NMS to reduce duplicates\n# ---------- CONSTANTS ----------\ndef calculate_ft_per_pixel(cow_bbox_height):\n    \"\"\"Calculate feet per pixel based on the detected cow's height in pixels.\"\"\"\n    ft_per_pixel = REAL_COW_HEIGHT_FT / cow_bbox_height",
+        "peekOfCode": "OUTPUT_DIR = \"output\"\nMIN_CONTOUR_AREA = 50\nREAL_COW_HEIGHT_FT = 3  # Real height of the cow in feet\nPIXEL_TO_SQFT = None  # This will be calculated dynamically\nCONF_THRESHOLD = 0.1  # Confidence threshold from your code\nIOU_THRESHOLD = 0.1  # Increased IoU threshold for NMS to reduce duplicates\n# ---------- CONSTANTS ----------\ndef calculate_ft_per_pixel(cow_bbox_height):\n    \"\"\"Calculate feet per pixel based on the detected cow's height in pixels.\"\"\"\n    ft_per_pixel = REAL_COW_HEIGHT_FT / cow_bbox_height",
         "detail": "work",
         "documentation": {}
     },
@@ -111,7 +129,7 @@
         "kind": 5,
         "importPath": "work",
         "description": "work",
-        "peekOfCode": "MIN_CONTOUR_AREA = 50\nREAL_COW_HEIGHT_FT = 3  # Real height of the cow in feet\nPIXEL_TO_SQFT = None  # This will be calculated dynamically\nCONF_THRESHOLD = 0.2  # Confidence threshold from your code\nIOU_THRESHOLD = 0.1  # Increased IoU threshold for NMS to reduce duplicates\n# ---------- CONSTANTS ----------\ndef calculate_ft_per_pixel(cow_bbox_height):\n    \"\"\"Calculate feet per pixel based on the detected cow's height in pixels.\"\"\"\n    ft_per_pixel = REAL_COW_HEIGHT_FT / cow_bbox_height\n    print(f\"[DETECTION] Cow pixel height: {cow_bbox_height}, ft/pixel: {ft_per_pixel:.4f}\")",
+        "peekOfCode": "MIN_CONTOUR_AREA = 50\nREAL_COW_HEIGHT_FT = 3  # Real height of the cow in feet\nPIXEL_TO_SQFT = None  # This will be calculated dynamically\nCONF_THRESHOLD = 0.1  # Confidence threshold from your code\nIOU_THRESHOLD = 0.1  # Increased IoU threshold for NMS to reduce duplicates\n# ---------- CONSTANTS ----------\ndef calculate_ft_per_pixel(cow_bbox_height):\n    \"\"\"Calculate feet per pixel based on the detected cow's height in pixels.\"\"\"\n    ft_per_pixel = REAL_COW_HEIGHT_FT / cow_bbox_height\n    print(f\"[DETECTION] Cow pixel height: {cow_bbox_height}, ft/pixel: {ft_per_pixel:.4f}\")",
         "detail": "work",
         "documentation": {}
     },
@@ -120,7 +138,7 @@
         "kind": 5,
         "importPath": "work",
         "description": "work",
-        "peekOfCode": "REAL_COW_HEIGHT_FT = 3  # Real height of the cow in feet\nPIXEL_TO_SQFT = None  # This will be calculated dynamically\nCONF_THRESHOLD = 0.2  # Confidence threshold from your code\nIOU_THRESHOLD = 0.1  # Increased IoU threshold for NMS to reduce duplicates\n# ---------- CONSTANTS ----------\ndef calculate_ft_per_pixel(cow_bbox_height):\n    \"\"\"Calculate feet per pixel based on the detected cow's height in pixels.\"\"\"\n    ft_per_pixel = REAL_COW_HEIGHT_FT / cow_bbox_height\n    print(f\"[DETECTION] Cow pixel height: {cow_bbox_height}, ft/pixel: {ft_per_pixel:.4f}\")\n    return ft_per_pixel",
+        "peekOfCode": "REAL_COW_HEIGHT_FT = 3  # Real height of the cow in feet\nPIXEL_TO_SQFT = None  # This will be calculated dynamically\nCONF_THRESHOLD = 0.1  # Confidence threshold from your code\nIOU_THRESHOLD = 0.1  # Increased IoU threshold for NMS to reduce duplicates\n# ---------- CONSTANTS ----------\ndef calculate_ft_per_pixel(cow_bbox_height):\n    \"\"\"Calculate feet per pixel based on the detected cow's height in pixels.\"\"\"\n    ft_per_pixel = REAL_COW_HEIGHT_FT / cow_bbox_height\n    print(f\"[DETECTION] Cow pixel height: {cow_bbox_height}, ft/pixel: {ft_per_pixel:.4f}\")\n    return ft_per_pixel",
         "detail": "work",
         "documentation": {}
     },
@@ -129,7 +147,7 @@
         "kind": 5,
         "importPath": "work",
         "description": "work",
-        "peekOfCode": "PIXEL_TO_SQFT = None  # This will be calculated dynamically\nCONF_THRESHOLD = 0.2  # Confidence threshold from your code\nIOU_THRESHOLD = 0.1  # Increased IoU threshold for NMS to reduce duplicates\n# ---------- CONSTANTS ----------\ndef calculate_ft_per_pixel(cow_bbox_height):\n    \"\"\"Calculate feet per pixel based on the detected cow's height in pixels.\"\"\"\n    ft_per_pixel = REAL_COW_HEIGHT_FT / cow_bbox_height\n    print(f\"[DETECTION] Cow pixel height: {cow_bbox_height}, ft/pixel: {ft_per_pixel:.4f}\")\n    return ft_per_pixel\ndef get_hoof_angle(hoof_crop, bbox_coords):",
+        "peekOfCode": "PIXEL_TO_SQFT = None  # This will be calculated dynamically\nCONF_THRESHOLD = 0.1  # Confidence threshold from your code\nIOU_THRESHOLD = 0.1  # Increased IoU threshold for NMS to reduce duplicates\n# ---------- CONSTANTS ----------\ndef calculate_ft_per_pixel(cow_bbox_height):\n    \"\"\"Calculate feet per pixel based on the detected cow's height in pixels.\"\"\"\n    ft_per_pixel = REAL_COW_HEIGHT_FT / cow_bbox_height\n    print(f\"[DETECTION] Cow pixel height: {cow_bbox_height}, ft/pixel: {ft_per_pixel:.4f}\")\n    return ft_per_pixel\ndef get_hoof_angle(hoof_crop, bbox_coords):",
         "detail": "work",
         "documentation": {}
     },
@@ -138,7 +156,7 @@
         "kind": 5,
         "importPath": "work",
         "description": "work",
-        "peekOfCode": "CONF_THRESHOLD = 0.2  # Confidence threshold from your code\nIOU_THRESHOLD = 0.1  # Increased IoU threshold for NMS to reduce duplicates\n# ---------- CONSTANTS ----------\ndef calculate_ft_per_pixel(cow_bbox_height):\n    \"\"\"Calculate feet per pixel based on the detected cow's height in pixels.\"\"\"\n    ft_per_pixel = REAL_COW_HEIGHT_FT / cow_bbox_height\n    print(f\"[DETECTION] Cow pixel height: {cow_bbox_height}, ft/pixel: {ft_per_pixel:.4f}\")\n    return ft_per_pixel\ndef get_hoof_angle(hoof_crop, bbox_coords):\n    if hoof_crop.shape[0] < 10 or hoof_crop.shape[1] < 10:",
+        "peekOfCode": "CONF_THRESHOLD = 0.1  # Confidence threshold from your code\nIOU_THRESHOLD = 0.1  # Increased IoU threshold for NMS to reduce duplicates\n# ---------- CONSTANTS ----------\ndef calculate_ft_per_pixel(cow_bbox_height):\n    \"\"\"Calculate feet per pixel based on the detected cow's height in pixels.\"\"\"\n    ft_per_pixel = REAL_COW_HEIGHT_FT / cow_bbox_height\n    print(f\"[DETECTION] Cow pixel height: {cow_bbox_height}, ft/pixel: {ft_per_pixel:.4f}\")\n    return ft_per_pixel\ndef get_hoof_angle(hoof_crop, bbox_coords):\n    if hoof_crop.shape[0] < 10 or hoof_crop.shape[1] < 10:",
         "detail": "work",
         "documentation": {}
     },
